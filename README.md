@@ -1,3 +1,7 @@
-# shaneb
+# Andy
 
-Repo for things we will create in our lessons. The master/main branch will remain empty, and we'll create a new branch for each lesson.
+Repo for things we will cover/create in our sessions. The main branch is, and should be, empty. There'll be a new branch created for each topic.
+
+## Branches
+
+- 01-vanilla-reactold-reactnew
