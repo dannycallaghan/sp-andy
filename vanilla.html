@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>VANILLA</title>
+</head>
+<body>
+
+  <div id="root">
+  </div>
+
+  <noscript>
+    <p>You must have JavaScript enabled to use this site.</p>
+  </noscript>
+
+  <script type="text/javascript">
+    const rootElement = document.getElementById('root');
+
+    class App {
+      constructor() {
+        this.useEffect();
+      }
+
+      useEffect() {
+        this.setLoading(true);
+        this.callApi();
+      }
+
+      callApi() {
+        const url = 'https://dummyjson.com/products/categories';
+
+        const getData = async () => {
+          const response = await fetch(url);
+          const json = await response.json();
+          this.setItems(json);
+        }
+
+        getData();
+      }
+
+      setItems(items) {
+        const ul = document.createElement('ul');
+        for (let i = 0, j = items.length; i < j; i++) {
+          const li = document.createElement('li');
+          li.textContent = items[i].name;
+          if (i % 2) {
+            li.classList.add('stripe');
+          }
+          ul.appendChild(li);
+        }
+        this.setLoading(false);
+        rootElement.appendChild(ul);
+      }
+
+      setLoading(loading) {
+        if (loading) {
+          const p = document.createElement('p');
+          p.textContent= 'Loading...';
+          rootElement.appendChild(p);
+          return;
+        }
+        rootElement.querySelector('p')?.remove();
+      }
+    }
+
+    // KICK OFF
+    window.addEventListener('DOMContentLoaded', new App());
+  </script>
+</body>
+</html>
