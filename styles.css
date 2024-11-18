@@ -17,3 +17,51 @@ li {
 li.stripe {
   background-color: #ccc;
 }
+
+.admin-controls button {
+  margin: 10px;
+  height: 40px;
+  line-height: 40px;
+  display: flex;
+  padding: 0 10px;
+  background-color: #a1cfa1;
+  border: 0;
+  text-transform: uppercase;
+  color: white;
+  font-weight: bold;
+}
+
+.admin-controls {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.admin-controls input {
+  font-size: 16px;
+  line-height: 20px;
+  height: 40px;
+  padding: 0 5px;
+}
+
+li {
+  display: flex;
+  align-items: center;
+}
+
+li span {
+  flex: 1;
+}
+
+li button {
+  margin: 10px;
+  height: 40px;
+  line-height: 40px;
+  display: flex;
+  padding: 0 10px;
+  background-color: #f00;
+  border: 0;
+  text-transform: uppercase;
+  color: white;
+  font-weight: bold;
+}

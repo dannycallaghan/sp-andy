@@ -21,34 +21,82 @@
   </noscript>
 
   <script type="text/babel">
+
+    // GRAB ROOT ELEMENT
     const rootElement = document.getElementById('root');
 
     function App() {
+      // CREATE STATE VARS
       const [loading, setLoading] = React.useState(true);
       const [items, setItems] = React.useState([]);
+      const [editItem, setEditItem] = React.useState(null);
 
+      const inputRef = React.useRef();
+
+      console.count('render');
+
+      // EQUIVALENT DOMCONTENTLOADED
       React.useEffect(() => {
-        const url = 'https://dummyjson.com/products/categories';
+        const url = './data.json';
 
-        const getData = async () => {
+        async function getData () {
           const response = await fetch(url);
           const json = await response.json();
           setItems(json);
           setLoading(false);
         }
+
         getData();
-      }, [])
+      }, []); // DEPENDENCY ARRAY
+
+      React.useEffect(() => {
+        setEditItem(null);
+        if (inputRef.current) {
+          inputRef.current.value = '';
+        }
+      }, [items]);
+
+      const handleAdd = () => {
+
+        if (editItem) {
+          setItems(prev => prev.map(item => item.id === editItem ? {
+            ...item, name: inputRef.current.value
+          } : item));
+          return;
+        }
+
+        setItems(prev => [...prev, { name: inputRef.current.value, id: Math.random()}]);
+      }
+
+      const handleDelete = (id) => {
+        setItems(prev => prev.filter(item => item.id !== id));
+      }
+
+      const handleEdit = (id) => {
+        setEditItem(id);
+        inputRef.current.value = items.find(item => item.id = id).name;
+      }
 
       if (loading) {
         return <p>Loading...</p>;
       }
 
       return (
-        <ul>
-          {items.map((item, i) => (
-            <li className={ i % 2 ? 'stripe' : ''}>{item.name}</li>
-          ))}
-        </ul>
+        <div>
+          <div className="admin-controls">
+            <input ref={inputRef} type="text" />
+            <button onClick={handleAdd}>Add new item</button>
+          </div>
+          <ul>
+            {items.map((item, i) => (
+              <li className={ i % 2 ? 'stripe' : ''}>
+                <span>{item.name}</span>
+                <button onClick={() => handleEdit(item.id)}>EDIT</button>
+                <button onClick={() => handleDelete(item.id)}>X</button>
+              </li>
+            ))}
+          </ul>
+        </div>
       );
     }
 

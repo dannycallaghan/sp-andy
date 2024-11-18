@@ -26,10 +26,43 @@
       useEffect() {
         this.setLoading(true);
         this.callApi();
+
+        this.addAdminFunctionality();
+      }
+
+      addAdminFunctionality() {
+        const adminControls = document.createElement('div');
+        adminControls.classList.add('admin-controls');
+        
+        const adminInput = document.createElement('input');
+        adminInput.type = 'text';
+        adminControls.appendChild(adminInput);
+        
+        const adminButton = document.createElement('button');
+        adminButton.textContent = 'Add new item';
+        adminControls.appendChild(adminButton);
+        
+        rootElement.appendChild(adminControls);
+
+        adminButton.addEventListener('click', () => {
+          this.addItem(adminInput.value);
+        })
+      }
+
+      addItem(value) {
+        if (!value || !value.length) return;
+
+        const ul = document.querySelector('ul');
+        const li = document.createElement('li');
+        li.textContent = value;
+        if (ul.children.length % 2) {
+          li.classList.add('stripe');
+        }
+        ul.appendChild(li);
       }
 
       callApi() {
-        const url = 'https://dummyjson.com/products/categories';
+        const url = './data.json';
 
         const getData = async () => {
           const response = await fetch(url);
